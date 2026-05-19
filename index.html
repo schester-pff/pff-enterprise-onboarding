@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PFF Contractor Onboarding — 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Outfit',system-ui,sans-serif;background-color:#1F1F22;background-image:linear-gradient(rgba(234,179,8,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(234,179,8,0.03) 1px,transparent 1px);background-size:40px 40px;min-height:100vh;color:#e8e8e8}
+.overlay{display:none}
+.container{position:relative;z-index:2;max-width:820px;margin:0 auto;padding:0 1rem 4rem}
+.logo{display:flex;align-items:center;justify-content:center;padding:2rem 0 1rem}
+.hero{text-align:center;padding:2rem 0 1.5rem}
+.hero h1{font-size:34px;font-weight:800;margin:0 0 0.5rem;letter-spacing:-0.5px}
+.hero .sub{color:#1A6AFF;font-size:18px;margin:0 0 0.5rem}
+.hero .meta{color:#888;font-size:14px}
+.card{background:#27272B;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1rem}
+.action-box{background:rgba(44,195,242,0.08);border:1px solid rgba(44,195,242,0.25);border-radius:10px;padding:1rem 1.25rem;margin-bottom:0.75rem;display:flex;align-items:flex-start;gap:12px}
+.action-num{background:#65C332;color:#000;font-weight:800;font-size:12px;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.action-text{color:#e8e8e8;font-size:14px;line-height:1.6}
+.action-text strong{color:#fff}
+.cta-box{background:linear-gradient(135deg,rgba(101,195,50,0.12),rgba(101,195,50,0.04));border:2px solid #65C332;border-radius:16px;padding:2.5rem;text-align:center;margin:2rem 0}
+.btn-primary{background:#65C332;color:#000;border:none;padding:1rem 3rem;border-radius:10px;font-size:18px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.5px}
+.btn-primary:hover{background:#e6ac00}
+.screener-card{background:#27272B;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:2rem;margin-bottom:1.5rem}
+.q-label{display:block;color:#fff;font-weight:500;margin-bottom:0.75rem;line-height:1.6;font-size:15px;white-space:pre-line}
+.q-num{color:#1A6AFF;font-size:12px;font-weight:700;margin-right:8px}
+.q-hint{color:#888;font-size:12px;margin-top:6px;font-style:italic}
+.radio-opt{display:flex;align-items:center;gap:12px;cursor:pointer;padding:0.75rem 1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;margin-bottom:8px;transition:all 0.15s}
+.radio-opt:hover{background:rgba(255,255,255,0.07)}
+.radio-opt.selected{background:rgba(101,195,50,0.1);border-color:rgba(101,195,50,0.5)}
+.radio-dot{width:18px;height:18px;border-radius:50%;border:2px solid #9ca3af;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.radio-opt.selected .radio-dot{border-color:#65C332;background:#65C332}
+.radio-inner{width:7px;height:7px;border-radius:50%;background:#000}
+.radio-text{color:#e8e8e8;font-size:15px}
+.radio-opt.selected .radio-text{color:#fff}
+select.q-select,input.q-text,textarea.q-textarea{width:100%;background:#1F1F22;border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:0.75rem 1rem;color:#e8e8e8;font-size:15px;outline:none;font-family:'Outfit',system-ui,sans-serif}
+select.q-select option{background:#1e2433;color:#fff}
+textarea.q-textarea{resize:vertical;line-height:1.6}
+.check-btn{padding:0.5rem 0.875rem;font-size:13px;background:rgba(255,255,255,0.05);color:#e8e8e8;border:1px solid rgba(255,255,255,0.1);border-radius:8px;cursor:pointer;font-family:inherit;transition:all 0.15s;margin:4px}
+.check-btn:hover{background:rgba(255,255,255,0.08)}
+.check-btn.selected{background:rgba(101,195,50,0.15);color:#65C332;border-color:rgba(101,195,50,0.4)}
+.avail-grid{display:grid;gap:8px}
+.avail-row{display:grid;grid-template-columns:90px 1fr;align-items:center;gap:12px;padding:0.6rem 0.875rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px}
+.avail-day{color:#1A6AFF;font-size:13px;font-weight:700}
+.avail-opts{display:flex;flex-wrap:wrap;gap:6px}
+.avail-btn{padding:3px 8px;font-size:11px;background:rgba(255,255,255,0.04);color:#888;border:1px solid rgba(255,255,255,0.08);border-radius:6px;cursor:pointer;font-family:inherit;transition:all 0.15s}
+.avail-btn:hover{background:rgba(255,255,255,0.08)}
+.avail-btn.selected{background:rgba(101,195,50,0.15);color:#65C332;border-color:rgba(101,195,50,0.4)}
+.q-block{margin-bottom:2rem}
+.progress-bar-bg{background:rgba(255,255,255,0.1);border-radius:8px;height:6px;overflow:hidden;max-width:400px;margin:0 auto 0.5rem}
+.progress-bar{height:100%;background:#65C332;border-radius:8px;transition:width 0.4s}
+.nav-row{display:flex;gap:12px;margin-top:1rem}
+.btn-back{padding:0.875rem 1.5rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#e8e8e8;cursor:pointer;font-size:15px;font-family:inherit}
+.btn-next{flex:1;padding:0.875rem;background:#65C332;border:none;border-radius:10px;color:#000;font-weight:800;cursor:pointer;font-size:16px;font-family:inherit}
+.btn-next:disabled{opacity:0.6;cursor:not-allowed}
+.error-msg{color:#ef4444;text-align:center;margin-bottom:1rem;font-size:14px}
+.hint{color:#888;font-size:12px;text-align:center;margin-top:0.75rem}
+.info-box{background:rgba(44,195,242,0.06);border:1px solid rgba(44,195,242,0.2);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem}
+.info-box p{color:#93c5fd;font-size:14px;line-height:1.7}
+.schedule-reference{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;overflow-x:auto}
+.schedule-reference h3{color:#1A6AFF;font-size:13px;font-weight:700;letter-spacing:0.5px;margin-bottom:0.75rem;text-transform:uppercase}
+.ref-table{width:100%;border-collapse:collapse;min-width:580px}
+.ref-table th{background:rgba(26,106,255,0.15);color:#1A6AFF;font-weight:700;padding:6px 8px;text-align:left;font-size:11px;letter-spacing:0.3px;border:1px solid rgba(44,195,242,0.15)}
+.ref-table td{padding:5px 8px;color:#e8e8e8;border:1px solid rgba(255,255,255,0.05);vertical-align:top;font-size:11px}
+.ref-table tr:nth-child(even) td{background:rgba(255,255,255,0.02)}
+.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;overflow-x:auto;min-width:0}
+.grid-col{display:flex;flex-direction:column;gap:4px;min-width:0}
+.grid-day-header{background:rgba(26,106,255,0.15);color:#1A6AFF;font-size:11px;font-weight:700;padding:5px 4px;border-radius:6px;text-align:center;letter-spacing:0.3px}
+.grid-slots{display:flex;flex-direction:column;gap:4px}
+.grid-slot{position:relative}
+.slot-select{width:100%;background:#1F1F22;border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:4px 2px;color:#888;font-size:11px;outline:none;font-family:'Outfit',system-ui,sans-serif;cursor:pointer;appearance:none;-webkit-appearance:none;text-align:center}
+.slot-select option{background:#1e2433;color:#fff}
+.grid-slot.filled .slot-select{border-color:rgba(101,195,50,0.4);background:rgba(101,195,50,0.08);color:#fff}
+.btn-add-slot{background:transparent;border:1px dashed rgba(255,255,255,0.15);border-radius:6px;color:#888;font-size:10px;padding:3px 2px;cursor:pointer;font-family:inherit;width:100%;transition:all 0.15s;margin-top:2px}
+.btn-add-slot:hover{border-color:rgba(101,195,50,0.4);color:#65C332}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(0,0,0,0.3);border-top-color:#000;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:600px){.hero h1{font-size:24px}.avail-row{grid-template-columns:1fr}.day-tab{padding:0.4rem 0.6rem;font-size:12px}}
+</style>
+</head>
+<body>
+<div class="overlay"></div>
+<div class="container" id="app">
+  <div id="page-welcome"></div>
+  <div id="page-form" style="display:none"></div>
+  <div id="page-done" style="display:none"></div>
+</div>
+<script>
+const SHEET_URL="https://script.google.com/macros/s/AKfycbwsiD44eb3Oi3MriNXrLIpIANYiD2rHOKJQ_FlAGCJ972Hyi1tnS3RFa1PJhzHHBW3lCA/exec";
+const answers={};
+const schedule={Saturday:[],Sunday:[],Monday:[],Tuesday:[],Wednesday:[],Thursday:[],Friday:[]};
+let activeDay='Saturday';
+let submitting=false;
+let currentSec=0;
+
+const COUNTRIES=["Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi","Cabo Verde","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo (Republic of the)","Congo (Democratic Republic of the)","Costa Rica","Croatia","Cuba","Cyprus","Czechia","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Eswatini","Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Korea (North)","Korea (South)","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nauru","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","North Macedonia","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia","Rwanda","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Tajikistan","Tanzania","Thailand","Timor-Leste","Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"];
+const YEARS_OPTS=["1 year","2 years","3 years","4 years","5 years","6 years","7 years","8 years","9 years","10+ years"];
+const TIMEZONES=["GMT / UTC+0 (UK, West Africa)","CET / UTC+1 (Central Europe)","EET / UTC+2 (Eastern Europe)","MSK / UTC+3 (Moscow)","GST / UTC+4 (Gulf)","IST / UTC+5:30 (India)","CST / UTC+8 (China)","JST / UTC+9 (Japan)","AEST / UTC+10 (Eastern Australia)","EST / UTC-5 (US Eastern)","CST / UTC-6 (US Central)","MST / UTC-7 (US Mountain)","PST / UTC-8 (US Pacific)","AKT / UTC-9 (Alaska)","HAW / UTC-10 (Hawaii)","Other"];
+const DAYS=["Saturday","Sunday","Monday","Tuesday","Wednesday","Thursday","Friday"];
+const HOURS=["Not avail.","Up to 2 hrs","2-4 hrs","4-6 hrs","6-8 hrs","8-10 hrs","10+ hrs"];
+const PROCESSES=["Base","Base Review","PP","PP Review","APP","APP Review","STPP","STPP Review","STA","STA Review","AR","AR Review","ABP","ABP Review","ABR","ABR Review","QBC","QBC Review","AC","AC Review","Analysis","Analysis Review","Run Review","All-Tackling","All-Tackling Review","HLS","HLS Review"];
+const OS_OPTS=["Windows PC","Mac","Both"];
+const TOTAL_GAMES_OPTS=["0","1-4","5-10","11-20","21-30","31-50","51-75","76-100","101-200","201-300","301-400","401-500","500+"];
+const AVG_WEEKLY_OPTS=["0","1","2","3","4","5-7","8-10","11-15","15+"];
+const PROCESS_TIMES={
+  "Base":["3 hrs or less","3-4 hrs","4-5 hrs","5-6 hrs","6+ hrs","Other"],
+  "Base Review":["1 hr or less","1-2 hrs","2+ hrs","Other"],
+  "PP":["3 hrs or less","3-4 hrs","4-5 hrs","5-6 hrs","6+ hrs","Other"],
+  "PP Review":["1 hr or less","1-2 hrs","2+ hrs","Other"],
+  "APP":["2 hrs or less","2-3 hrs","3-4 hrs","4-5 hrs","5+ hrs","Other"],
+  "STPP":["2 hrs or less","2-3 hrs","3-4 hrs","4+ hrs","Other"],
+  "STA":["1 hr or less","1-2 hrs","2-3 hrs","3+ hrs","Other"],
+  "STA Review":["1 hr or less","1-2 hrs","2-3 hrs","3+ hrs","Other"],
+  "AR":["1 hr or less","1-2 hrs","2-3 hrs","3+ hrs","Other"],
+  "ABP":["1 hr or less","1-2 hrs","2-3 hrs","3+ hrs","Other"],
+  "ABR":["1 hr or less","1-2 hrs","2-3 hrs","3+ hrs","Other"],
+  "QBC":["1 hr or less","1-2 hrs","2-3 hrs","3+ hrs","Other"],
+  "AC":["1 hr or less","1-2 hrs","2-3 hrs","3+ hrs","Other"],
+  "Analysis":["3 hrs or less","3-4 hrs","4-5 hrs","5-6 hrs","6+ hrs","Other"],
+  "All-Tackling":["1 hr or less","1-2 hrs","2-3 hrs","3+ hrs","Other"],
+  "All-Tackling Review":["1 hr or less","1-2 hrs","2-3 hrs","3+ hrs","Other"],
+  "HLS":["1 hr or less","1-2 hrs","2-3 hrs","3+ hrs","Other"],
+  "HLS Review":["1 hr or less","1-2 hrs","2-3 hrs","3+ hrs","Other"],
+  "APP Review":["1 hr or less","1-2 hrs","2-3 hrs","3+ hrs","Other"],
+  "STPP Review":["1 hr or less","1-2 hrs","2-3 hrs","3+ hrs","Other"],
+  "AR Review":["1 hr or less","1-2 hrs","2-3 hrs","3+ hrs","Other"],
+  "ABP Review":["1 hr or less","1-2 hrs","2-3 hrs","3+ hrs","Other"],
+  "ABR Review":["1 hr or less","1-2 hrs","2-3 hrs","3+ hrs","Other"],
+  "QBC Review":["1 hr or less","1-2 hrs","2-3 hrs","3+ hrs","Other"],
+  "AC Review":["1 hr or less","1-2 hrs","2-3 hrs","3+ hrs","Other"],
+  "Analysis Review":["1 hr or less","1-2 hrs","2-3 hrs","3+ hrs","Other"],
+  "Run Review":["1 hr or less","1-2 hrs","2-3 hrs","3+ hrs","Other"],
+};
+
+// In-season schedule data from graphic
+const SCHEDULE_DATA={
+  Saturday:["Base","PP","Analysis"],
+  Sunday:["Base","PP","Analysis","PP Review","Base Review","APP","STPP","STA","AR","QBC","ABR","ABP","AC (NFL)","All-Tackling","HLS"],
+  Monday:["PP (FCS Only)","Analysis (FCS Only)","PP Review","Base Review","APP","STPP","STA","AR","ABP","ABR","QBC","AC (NFL)","All-Tackling","HLS"],
+  Tuesday:["PP (FCS Only)","Analysis (FCS Only)","Base Review","APP","STPP","STA","AR","ABP","ABR","QBC","All-Tackling","HLS"],
+  Wednesday:["PP (FCS Only)","Analysis (FCS Only)","STPP (FCS Only)","ABP","ABR","AC (NCAA)","All-Tackling","HLS"],
+  Thursday:["ABP","ABR","AC (NCAA)","All-Tackling","HLS"],
+  Friday:["ABP","ABR","AC (NCAA)","All-Tackling","HLS"]
+};
+
+
+
+
+function logo(){return`<div style="display:flex;align-items:center;justify-content:center;padding:2.5rem 0 1.5rem"><img src="logo.png" alt="PFF Enterprise — Now Part of Teamworks" style="height:80px;width:auto"></div>`;}
+
+function renderWelcome(){
+  document.getElementById('page-welcome').innerHTML=`
+  ${logo()}
+  <div class="hero"><h1>Welcome to Teamworks</h1><p class="sub">Contractor Onboarding and Survey — 2026</p></div>
+
+  <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:1.5rem 2rem;margin-bottom:1.5rem">
+    <p style="color:#1A6AFF;font-size:13px;font-weight:700;letter-spacing:0.5px;margin-bottom:1rem;text-transform:uppercase">Your Onboarding Form</p>
+    <p style="color:#e8e8e8;font-size:15px;line-height:1.7;margin-bottom:1rem">As part of the PFF Enterprise transition to Teamworks, we need to collect some updated information from you to help with onboarding and to fill some gaps in the records we hold.</p>
+    <p style="color:#e8e8e8;font-size:15px;line-height:1.7;margin-bottom:1rem">We also want to use this as an opportunity to better understand how we can make more of the time you have available. We know many of you would like to do more in-season, and that is something we are genuinely looking to address. This form gives you the chance to tell us what your ideal weekly schedule would look like — and we will do our best to make that work.</p>
+    <p style="color:#e8e8e8;font-size:15px;line-height:1.7;margin-bottom:1rem">One thing worth knowing: this year's recruitment drive is deliberately smaller than previous years. After three seasons of significant growth, the current team is the strongest it has ever been. Our focus now is on developing the people we already have and giving those who want it more opportunities to work games in-season, rather than adding large numbers of new contractors.</p>
+    <p style="color:#e8e8e8;font-size:15px;line-height:1.7">The information you provide here will help us plan for that. Some questions may be familiar from previous forms — please answer them again as your circumstances may have changed. This should take around 5 minutes.</p>
+  </div>
+
+  <div class="cta-box">
+    <h2 style="color:#fff;font-size:24px;font-weight:800;margin:0 0 1rem">Complete Your Onboarding and Contractor Survey</h2>
+    <p style="color:#888;font-size:14px;margin-bottom:1.5rem">Takes around 5 minutes. All required questions must be answered.</p>
+    <button class="btn-primary" onclick="showForm()">Begin Onboarding</button>
+  </div>`;
+}
+
+
+function buildSections(){
+  const sel=answers['processes']||[];
+  const learning=answers['processes_learning']||[];
+  const hasProcs=sel.length>0;
+  const processTimeQs=sel.map(p=>({id:'time_'+p.replace(/[\s()]/g,'_'),text:p,type:'processtime',process:p}));
+  const n=hasProcs?1:0;
+  return[
+    {title:"Section 1 — Onboarding",startNum:1,qs:[
+      {id:"name",text:"Full name",type:"text",ph:"Your full name"},
+      {id:"email",text:"Email address",type:"text",ph:"Your email address"},
+      {id:"preferred_email",text:"Preferred contact email going forward",type:"text",ph:"Leave blank if same as above",optional:true},
+      {id:"initials",text:"Your PFF initials",type:"initials"},
+      {id:"discord_username",text:"Your Discord username",type:"text",ph:"e.g. yourname#1234 or yourname"},
+      {id:"country",text:"Country of residence",type:"select",opts:COUNTRIES},
+      {id:"timezone",text:"Your time zone",type:"select",opts:TIMEZONES},
+      {id:"years",text:"How long have you been a PFF contractor?",type:"select",opts:YEARS_OPTS},
+      {id:"continuation",text:"Do you wish to continue as a PFF Enterprise Data Collector?",type:"radio",opts:["Yes — I wish to continue","No — I do not wish to continue","I have questions before I can decide"]},
+    ]},
+    {title:"Section 2 — Onboarding",startNum:10,qs:[
+      {id:"right_to_work",text:"Do you have the right to work as a contractor in your country of residence?",type:"radio",opts:["Yes","No","I'm not sure"]},
+      {id:"slack_confirm",text:"I understand I need to join Slack before the 2026 season and will do so when I receive my invite.",type:"radio",opts:["Yes, I confirm","I have questions about this"]},
+      {id:"docs_confirm",text:"I understand I need to sign updated HR onboarding documents and will do so when they are sent to me.",type:"radio",opts:["Yes, I confirm","I have questions about this"]},
+    ]},
+    {title:"Section 3 — Survey",qs:[
+      {id:"processes",text:"Which processes are you currently trained in?\nSelect all that apply.",type:"multicheck",opts:PROCESSES},
+      {id:"processes_learning",text:"Which processes are you training in this offseason?\nSelect all that apply.",type:"multicheck",opts:PROCESSES},
+      {id:"total_games_last_season",text:"How many game assignments did you work in total last season?",type:"select",opts:TOTAL_GAMES_OPTS},
+      {id:"avg_games_per_week",text:"On average, how many game assignments did you work per week last season?",type:"select",opts:AVG_WEEKLY_OPTS},
+      {id:"preferred_games_per_week",text:"If you could choose, how many game assignments would you ideally like to work per week this season?",type:"select",opts:AVG_WEEKLY_OPTS},
+      {id:"workload_preference",text:"What would you like your overall workload to look like this season compared to last?",type:"radio",opts:["Fewer game assignments than last season","About the same as last season","More game assignments than last season"]},
+    ]},
+    ...(hasProcs?[{title:"Section 4 — Time Per Process",isTimeSection:true,qs:processTimeQs}]:[]),
+    {title:`Section ${4+n} — Availability`,qs:[
+      {id:"availability",text:"For each day of the week, select the number of hours you are typically available to work.\nThis helps us with scheduling — please be as accurate as possible.",type:"availability"},
+    ]},
+    {title:`Section ${5+n} — Ideal Weekly Schedule`,isSchedule:true,qs:[]},
+    {title:`Section ${6+n} — Equipment`,qs:[
+      {id:"dual_monitor",text:"Do you use a dual monitor setup when collecting data for games?",type:"radio",opts:["Yes","No"]},
+      {id:"os",text:"What operating system do you use?",type:"radio",opts:OS_OPTS},
+      {id:"hardware_notes",text:"Any additional hardware details you would like us to know about?",type:"text",ph:"Optional — leave blank if not applicable",optional:true},
+      {id:"questions_for_us",text:"Do you have any questions for us?\nIf so, please use the box below and we will do our best to get back to you.",type:"textarea",ph:"Type your question here — or leave blank if you have nothing to ask right now.",optional:true},
+    ]},
+  ];
+}
+
+
+function getAvailableProcesses(){
+  const trained=answers['processes']||[];
+  const learning=answers['processes_learning']||[];
+  const combined=[...new Set([...trained,...learning])];
+  return combined.filter(p=>p);
+}
+
+function renderScheduleSection(s,prog,isLast){
+  const availProcs=getAvailableProcesses();
+  const days=['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'];
+
+  // Build reference table
+  const maxRows=Math.max(...Object.values(SCHEDULE_DATA).map(a=>a.length));
+  let tableRows='';
+  for(let i=0;i<maxRows;i++){
+    tableRows+=`<tr>${days.map(d=>`<td>${SCHEDULE_DATA[d][i]||''}</td>`).join('')}</tr>`;
+  }
+
+  // Build grid columns — one per day
+  const procOpts=availProcs.length===0
+    ?`<option value="">— No processes —</option>`
+    :`<option value=""></option>${availProcs.map(p=>`<option value="${p}">${p}</option>`).join('')}`;
+
+  const gridCols=days.map(day=>{
+    const slots=schedule[day];
+    const displayCount=Math.max(5,slots.length);
+    let slotsHtml='';
+    for(let i=0;i<displayCount;i++){
+      const val=slots[i]?slots[i].process:'';
+      const filled=!!val;
+      slotsHtml+=`<div class="grid-slot${filled?' filled':''}">
+        <select class="slot-select" data-day="${day}" data-idx="${i}" onchange="setSlot('${day}',${i},this.value)">
+          <option value=""></option>${availProcs.map(p=>`<option value="${p}"${val===p?' selected':''}>${p}</option>`).join('')}
+        </select>
+      </div>`;
+    }
+    return`<div class="grid-col">
+      <div class="grid-day-header">${day}</div>
+      <div class="grid-slots" id="slots-${day}">${slotsHtml}</div>
+      <button class="btn-add-slot" onclick="addSlot('${day}')">+ Add slot</button>
+    </div>`;
+  }).join('');
+
+  document.getElementById('page-form').innerHTML=`
+  ${logo()}
+  <div style="text-align:center;padding:1.5rem 0 1rem">
+    <h2 style="color:#fff;font-size:22px;font-weight:700;margin:0 0 1rem">${s.title}</h2>
+    <div class="progress-bar-bg"><div class="progress-bar" style="width:${prog}%"></div></div>
+    <p style="color:#888;font-size:13px">Section ${currentSec+1} of ${buildSections().length} — ${s.title}</p>
+  </div>
+  <div class="screener-card">
+    <h3 style="color:#1A6AFF;font-size:17px;font-weight:700;margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid rgba(255,255,255,0.1)">${s.title}</h3>
+    <p style="color:#e8e8e8;font-size:14px;line-height:1.7;margin-bottom:1.25rem">Use the grid below to build your ideal weekly schedule. Each slot represents one game assignment — select a process from the dropdown. Add as many slots as you like on any day using the button at the bottom of that column. This is your ideal — be as ambitious as you like, there are no wrong answers.</p>
+
+    <div class="schedule-reference">
+      <h3>Process in-season days worked — for reference</h3>
+      <div style="overflow-x:auto">
+        <table class="ref-table">
+          <thead><tr>${days.map(d=>`<th>${d}</th>`).join('')}</tr></thead>
+          <tbody>${tableRows}</tbody>
+        </table>
+      </div>
+    </div>
+
+    ${availProcs.length===0?`<div class="info-box"><p>You have not selected any processes in Section 3. Go back and select the processes you are trained in or learning this offseason — they will then appear here.</p></div>`:''}
+
+    <p style="color:#888;font-size:13px;line-height:1.6;margin-bottom:0.75rem">Each slot represents one full game assignment. If you want multiple games in the same process on the same day, just fill multiple slots with that process. Leave slots blank on days you do not want to work, or if you only want a limited number of games that day.</p>
+
+    <div class="week-grid" id="week-grid">${gridCols}</div>
+
+    <div class="q-block" style="margin-top:1.5rem;margin-bottom:0">
+      <label class="q-label">Any additional notes about your schedule preferences?<br><span style="color:#888;font-size:13px;font-weight:400">e.g. half games vs full games, specific time windows, process combinations you prefer, anything else we should know.</span></label>
+      <textarea class="q-textarea" rows="4" placeholder="Optional — leave blank if you have nothing to add." oninput="setAnswer('schedule_notes',this.value)">${answers['schedule_notes']||''}</textarea>
+    </div>
+  </div>
+  <div id="err-msg" class="error-msg" style="display:none">Please answer all required questions before continuing.</div>
+  <div class="nav-row">
+    <button class="btn-back" onclick="${currentSec>0?'prevSec()':'backToWelcome()'}">Back</button>
+    <button class="btn-next" id="btn-next" onclick="nextOrSubmit()">${isLast?'Submit Form':'Next Section'}</button>
+  </div>
+  <p class="hint">All required questions must be answered before proceeding</p>`;
+}
+
+function setSlot(day,idx,val){
+  if(!schedule[day])schedule[day]=[];
+  while(schedule[day].length<=idx)schedule[day].push({process:''});
+  schedule[day][idx]={process:val};
+  // Just toggle the filled class on the parent slot div — no re-render
+  const container=document.getElementById('slots-'+day);
+  if(container){
+    const slotDivs=container.querySelectorAll('.grid-slot');
+    if(slotDivs[idx]){
+      if(val){slotDivs[idx].classList.add('filled');}
+      else{slotDivs[idx].classList.remove('filled');}
+    }
+  }
+}
+
+function addSlot(day){
+  if(!schedule[day])schedule[day]=[];
+  schedule[day].push({process:''});
+  const idx=schedule[day].length-1;
+  const availProcs=getAvailableProcesses();
+  const container=document.getElementById('slots-'+day);
+  if(!container)return;
+  const div=document.createElement('div');
+  div.className='grid-slot';
+  const sel=document.createElement('select');
+  sel.className='slot-select';
+  sel.setAttribute('data-day',day);
+  sel.setAttribute('data-idx',idx);
+  sel.onchange=function(){setSlot(day,idx,this.value);};
+  const emptyOpt=document.createElement('option');
+  emptyOpt.value='';
+  sel.appendChild(emptyOpt);
+  availProcs.forEach(p=>{
+    const opt=document.createElement('option');
+    opt.value=p;opt.textContent=p;
+    sel.appendChild(opt);
+  });
+  div.appendChild(sel);
+  container.appendChild(div);
+}
+
+
+function showForm(){
+  document.getElementById('page-welcome').style.display='none';
+  document.getElementById('page-form').style.display='block';
+  currentSec=0;renderSection();window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function renderSection(){
+  const sections=buildSections();
+  const s=sections[currentSec];
+  const prog=Math.round(((currentSec+1)/sections.length)*100);
+  const isLast=currentSec===sections.length-1;
+
+  if(s.isSchedule){renderScheduleSection(s,prog,isLast);return;}
+
+  let qNum=s.startNum||1;
+  const qHtml=s.qs.map(q=>{
+    if(q.type==='infolink')return`<div class="info-box"><p>Interested in learning a new All-22 process this offseason? <a href="https://profootballfocus.fillout.com/forms" target="_blank" rel="noopener" style="color:#65C332;font-weight:700">Sign up here</a> — let us know which process you would like to add to your repertoire and we will be in touch with details.</p></div>`;
+    const num=qNum++;
+    const v=answers[q.id]||'';
+    let input='';
+    if(q.type==='radio'){
+      input=q.opts.map(o=>`<div class="radio-opt${v===o?' selected':''}" onclick="setRadio('${q.id}','${o.replace(/'/g,"\\'").replace(/"/g,"&quot;")}',this)"><div class="radio-dot">${v===o?'<div class="radio-inner"></div>':''}</div><span class="radio-text">${o}</span></div>`).join('');
+    }else if(q.type==='select'){
+      input=`<select class="q-select" onchange="setAnswer('${q.id}',this.value);${q.id==='timezone'?'handleTimezoneOther(this.value)':''}"><option value="">Select...</option>${q.opts.map(o=>`<option value="${o}"${v===o?' selected':''}>${o}</option>`).join('')}</select>`;
+      if(q.id==='timezone'&&v==='Other')input+=`<input class="q-text" type="text" placeholder="Please describe your time zone..." value="${answers['timezone_other']||''}" oninput="setAnswer('timezone_other',this.value)" style="margin-top:10px">`;
+    }else if(q.type==='text'){
+      input=`<input class="q-text" type="text" placeholder="${q.ph||''}" value="${v}" oninput="setAnswer('${q.id}',this.value)">`;
+      if(q.optional)input+=`<p class="q-hint">Optional</p>`;
+    }else if(q.type==='textarea'){
+      input=`<textarea class="q-textarea" rows="4" placeholder="${q.ph||''}" oninput="setAnswer('${q.id}',this.value)">${v}</textarea>`;
+      if(q.optional)input+=`<p class="q-hint">Optional</p>`;
+    }else if(q.type==='initials'){
+      input=`<input class="q-text" type="text" value="${v}" maxlength="3" oninput="setInitials(this)" style="text-transform:uppercase;letter-spacing:4px;font-size:20px;font-weight:700;max-width:120px"><p class="q-hint">2 or 3 letters</p>`;
+    }else if(q.type==='multicheck'){
+      const arr=answers[q.id]||[];
+      input=`<div style="display:flex;flex-wrap:wrap;gap:0">${q.opts.map(o=>`<button class="check-btn${arr.includes(o)?' selected':''}" onclick="toggleCheck('${q.id}','${o}')">${o}</button>`).join('')}</div>`;
+    }else if(q.type==='processtime'){
+      const opts=PROCESS_TIMES[q.process]||[];
+      input=`<select class="q-select" onchange="setAnswer('${q.id}',this.value);handleProcessTimeOther('${q.id}',this.value)"><option value="">Select...</option>${opts.map(o=>`<option value="${o}"${v===o?' selected':''}>${o}</option>`).join('')}</select>`;
+      if(v==='Other')input+=`<input class="q-text" type="text" placeholder="Please describe your typical game time..." value="${answers[q.id+'_other']||''}" oninput="setAnswer('${q.id+'_other'}',this.value)" style="margin-top:10px">`;
+    }else if(q.type==='availability'){
+      const av=answers['availability']||{};
+      input=`<div class="avail-grid">${DAYS.map(d=>`<div class="avail-row"><span class="avail-day">${d}</span><div class="avail-opts">${HOURS.map(h=>`<button class="avail-btn${av[d]===h?' selected':''}" onclick="setAvail('${d}','${h.replace(/'/g,"\\'")}')">${h}</button>`).join('')}</div></div>`).join('')}</div>`;
+    }
+    return`<div class="q-block"><label class="q-label"><span class="q-num">${num}.</span>${q.text}</label>${input}</div>`;
+  }).join('');
+
+  const timeSectionNote=s.isTimeSection?`<div class="info-box" style="margin-bottom:1.5rem"><p>How long does it take you to complete a normal game assignment in each process listed below? If you are more used to doing half games, please double your time when filling in that section.</p><p style="margin-top:0.75rem">Please be honest with this. If we are going to give you multiple games in a day, we need to understand how long each assignment actually takes you — so we do not overload your schedule, or shortchange you if you work faster than average.</p></div>`:'';
+
+  document.getElementById('page-form').innerHTML=`
+  ${logo()}
+  <div style="text-align:center;padding:1.5rem 0 1rem">
+    <h2 style="color:#fff;font-size:22px;font-weight:700;margin:0 0 1rem">${s.title}</h2>
+    <div class="progress-bar-bg"><div class="progress-bar" style="width:${prog}%"></div></div>
+    <p style="color:#888;font-size:13px">Section ${currentSec+1} of ${sections.length} — ${s.title}</p>
+  </div>
+  <div class="screener-card">
+    <h3 style="color:#1A6AFF;font-size:17px;font-weight:700;margin-bottom:1.5rem;padding-bottom:0.75rem;border-bottom:1px solid rgba(255,255,255,0.1)">${s.title}</h3>
+    ${timeSectionNote}
+    ${qHtml}
+  </div>
+  <div id="err-msg" class="error-msg" style="display:none">Please answer all required questions before continuing.</div>
+  <div class="nav-row">
+    <button class="btn-back" onclick="${currentSec>0?'prevSec()':'backToWelcome()'}">Back</button>
+    <button class="btn-next" id="btn-next" onclick="nextOrSubmit()">${isLast?'Submit Form':'Next Section'}</button>
+  </div>
+  <p class="hint">All required questions must be answered before proceeding</p>`;
+}
+
+
+function handleTimezoneOther(val){if(val!=='Other')answers['timezone_other']='';renderSection();}
+function handleProcessTimeOther(id,val){if(val!=='Other')answers[id+'_other']='';renderSection();}
+function setInitials(el){const val=el.value.replace(/[^a-zA-Z]/g,'').toUpperCase().slice(0,3);el.value=val;answers['initials']=val;}
+function setRadio(id,val,el){
+  answers[id]=val;
+  el.closest('.screener-card').querySelectorAll('.radio-opt').forEach(o=>{if(o.closest('.q-block')===el.closest('.q-block')){o.classList.remove('selected');o.querySelector('.radio-dot').innerHTML='';}});
+  el.classList.add('selected');el.querySelector('.radio-dot').innerHTML='<div class="radio-inner"></div>';
+}
+function setAnswer(id,val){answers[id]=val;}
+function setAvail(day,hrs){if(!answers['availability'])answers['availability']={};answers['availability'][day]=hrs;renderSection();}
+function toggleCheck(id,val){const arr=answers[id]||[];answers[id]=arr.includes(val)?arr.filter(x=>x!==val):[...arr,val];renderSection();}
+
+function secComplete(){
+  const sections=buildSections();
+  const s=sections[currentSec];
+  if(s.isSchedule)return true; // schedule section is optional
+  return s.qs.every(q=>{
+    if(q.type==='infolink')return true;
+    if(q.optional)return true;
+    if(q.type==='multicheck')return(answers[q.id]||[]).length>0;
+    if(q.type==='availability'){const av=answers['availability']||{};return DAYS.every(d=>av[d]);}
+    if(q.type==='initials')return(answers[q.id]||'').length>=2;
+    if(q.type==='processtime'){
+      if(!answers[q.id])return false;
+      if(answers[q.id]==='Other')return(answers[q.id+'_other']||'').trim().length>0;
+      return true;
+    }
+    return answers[q.id]!==undefined&&answers[q.id]!=='';
+  });
+}
+
+function nextOrSubmit(){
+  if(!secComplete()){
+    const err=document.getElementById('err-msg');
+    if(err){err.style.display='block';}
+    return;
+  }
+  if(currentSec===0&&answers['continuation']==='No — I do not wish to continue'){submitForm();return;}
+  const sections=buildSections();
+  if(currentSec===sections.length-1){submitForm();return;}
+  currentSec++;renderSection();window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function prevSec(){currentSec--;renderSection();window.scrollTo({top:0,behavior:'smooth'});}
+function backToWelcome(){document.getElementById('page-form').style.display='none';document.getElementById('page-welcome').style.display='block';window.scrollTo({top:0,behavior:'smooth'});}
+
+function buildSchedulePayload(){
+  const parts=[];
+  Object.entries(schedule).forEach(([day,slots])=>{
+    const filled=slots.filter(s=>s&&s.process);
+    if(filled.length>0){
+      parts.push(`${day}: ${filled.map(s=>s.process).join(', ')}`);
+    }
+  });
+  return parts.join(' | ');
+}
+
+function buildPayload(){
+  const avail=answers['availability']||{};
+  const sel=answers['processes']||[];
+  const processTimes={};
+  sel.forEach(p=>{
+    const key='time_'+p.replace(/[\s()]/g,'_');
+    processTimes[p]=answers[key]==='Other'?(answers[key+'_other']||'Other'):(answers[key]||'');
+  });
+  const payload={
+    leaving:answers['continuation']==='No — I do not wish to continue'?'YES — LEAVING':'',
+    continuation:answers['continuation']||'',
+    name:answers['name']||'',
+    email:answers['email']||'',
+    preferred_email:answers['preferred_email']||'',
+    initials:answers['initials']||'',
+    discord_username:answers['discord_username']||'',
+    country:answers['country']||'',
+    timezone:answers['timezone']==='Other'?(answers['timezone_other']||'Other'):(answers['timezone']||''),
+    years_with_pff:answers['years']||'',
+    right_to_work:answers['right_to_work']||'',
+    slack_confirm:answers['slack_confirm']||'',
+    docs_confirm:answers['docs_confirm']||'',
+    processes:sel.join(', '),
+    processes_learning:(answers['processes_learning']||[]).join(', '),
+    process_times:JSON.stringify(processTimes),
+    total_games_last_season:answers['total_games_last_season']||'',
+    avg_games_per_week:answers['avg_games_per_week']||'',
+    preferred_games_per_week:answers['preferred_games_per_week']||'',
+    workload_preference:answers['workload_preference']||'',
+    ideal_schedule:buildSchedulePayload(),
+    schedule_notes:answers['schedule_notes']||'',
+    dual_monitor:answers['dual_monitor']||'',
+    os:answers['os']||'',
+    hardware_notes:answers['hardware_notes']||'',
+    questions_for_us:answers['questions_for_us']||'',
+    submitted_at:new Date().toISOString(),
+  };
+  DAYS.forEach(d=>payload['avail_'+d.toLowerCase()]=avail[d]||'');
+  return payload;
+}
+
+async function submitForm(){
+  if(submitting)return;
+  submitting=true;
+  const btn=document.getElementById('btn-next');
+  if(btn){btn.innerHTML='<span class="spinner"></span>Submitting...';btn.disabled=true;}
+
+  const payload=buildPayload();
+  let success=false;
+  for(let attempt=1;attempt<=3;attempt++){
+    try{
+      const res=await fetch(SHEET_URL+'?data='+encodeURIComponent(JSON.stringify(payload)),{method:'GET'});
+      if(res.ok||res.status===0){success=true;break;}
+    }catch(e){
+      if(attempt===3)break;
+      await new Promise(r=>setTimeout(r,1000*attempt));
+    }
+  }
+
+  if(success){
+    showDone();
+  }else{
+    submitting=false;
+    if(btn){btn.innerHTML='Submit Form';btn.disabled=false;}
+    const err=document.getElementById('err-msg');
+    if(err){err.textContent='Something went wrong — please try again.';err.style.display='block';}
+  }
+}
+
+
+function showDone(){
+  document.getElementById('page-form').style.display='none';
+  document.getElementById('page-done').style.display='block';
+  const first=(answers['name']||'').split(' ')[0];
+  const cont=answers['continuation']||'';
+  const isNo=cont==='No — I do not wish to continue';
+  const hasQuestions=cont==='I have questions before I can decide';
+  document.getElementById('page-done').innerHTML=`
+  ${logo()}
+  <div style="text-align:center;padding:3rem 0 2rem">
+    <div style="width:64px;height:64px;border-radius:50%;background:rgba(101,195,50,0.15);border:2px solid rgba(101,195,50,0.5);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:28px;color:#65C332;font-weight:800">&#10003;</div>
+    <h1 style="color:#fff;font-size:28px;font-weight:800;margin:0 0 0.5rem">${isNo?'Thank you for letting us know.':`You're all set${first?', '+first:''}.`}</h1>
+    <p style="color:#888;font-size:15px">${isNo?'Your response has been received.':'Onboarding form complete — thank you.'}</p>
+  </div>
+  ${isNo?`
+  <div class="card" style="text-align:center">
+    <p style="color:#e8e8e8;font-size:15px;line-height:1.7;margin-bottom:1rem">We are sorry to be losing you and are truly grateful for everything you contributed during your time with PFF. We will remove you from our mailing lists so you will not continue receiving updates and availability forms going forward.</p>
+    <p style="color:#e8e8e8;font-size:15px;line-height:1.7">If you would be open to sharing a little more about your decision, we would love to hear from you — please feel free to email <a href="mailto:schester@teamworks.com" style="color:#65C332">schester@teamworks.com</a> to arrange a time to chat.</p>
+  </div>`:`
+  <div class="card" style="border-color:rgba(101,195,50,0.3);background:rgba(101,195,50,0.04);margin-bottom:1.5rem">
+    <p style="color:#e8e8e8;font-size:15px;line-height:1.7">Your information has been received. Two things still to complete when you hear from us:</p>
+  </div>
+  <div class="action-box"><div class="action-num">2</div><div class="action-text"><strong>Join Slack</strong> — invite coming separately. Discord will be retired before the season. <span style="color:#888;font-size:13px">Allow up to 2 weeks as the workspace is being set up.</span></div></div>
+  <div class="action-box"><div class="action-num">3</div><div class="action-text"><strong>Sign your HR documents</strong> — these will be sent to you by Teamworks shortly. <span style="color:#888;font-size:13px">Allow up to 2 weeks — Teamworks will send these once all onboarding forms have been received.</span></div></div>
+  ${hasQuestions?`
+  <div class="card" style="border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.04);margin-top:1.5rem">
+    <p style="color:#f59e0b;font-weight:700;font-size:14px;margin-bottom:0.5rem">YOU HAVE QUESTIONS</p>
+    <p style="color:#e8e8e8;font-size:15px;line-height:1.7">You indicated you had some questions before confirming whether you would like to continue with us at Teamworks. Please email <a href="mailto:schester@teamworks.com" style="color:#65C332">schester@teamworks.com</a> to arrange a time to chat — we will do our best to answer anything you would like to talk through.</p>
+  </div>`:''}
+  <div class="card" style="margin-top:1.5rem;text-align:center">
+    <p style="color:#888;font-size:14px">Questions? Get in touch: <a href="mailto:schester@teamworks.com" style="color:#65C332">schester@teamworks.com</a></p>
+  </div>`}`;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+renderWelcome();
+</script>
+</body>
+</html>
